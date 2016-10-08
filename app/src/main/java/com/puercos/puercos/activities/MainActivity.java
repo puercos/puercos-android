@@ -1,10 +1,14 @@
-package com.puercos.puercos;
+package com.puercos.puercos.activities;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.puercos.puercos.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     // region Actions
     public void handleBeginButton(View view) {
-
+        Intent intent = new Intent(this, RecordActivity.class);
+        startActivity(intent);
     }
     // endregion
 

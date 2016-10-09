@@ -3,8 +3,7 @@
     package="com.puercos.puercos">
 
     <!-- Permissions -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RecordActivity"></activity>
+        <activity android:name=".activities.RecordActivity" />
+        <activity android:name=".activities.FinishEdittingPasswordActivity"></activity>
     </application>
 
 </manifest>

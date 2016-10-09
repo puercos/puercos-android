@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="5"
+            android:text="6"
             android:textColor="@color/colorWhite"
             android:textSize="45dp"/>
 
@@ -36,8 +36,8 @@
         android:layout_weight="1"
         aw:aw_format="vertical_lines"
         aw:aw_gravity="center"
-        aw:aw_width="100"
-        aw:aw_height="200"
+        aw:aw_width="800"
+        aw:aw_height="100"
         aw:aw_num_waves="10"
         aw:aw_line_with="30"
         aw:aw_line_min_with="30"

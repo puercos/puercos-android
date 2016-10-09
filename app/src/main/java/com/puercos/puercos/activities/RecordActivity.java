@@ -15,15 +15,26 @@ import com.puercos.puercos.components.timerView.TimerView;
 
 import org.firezenk.audiowaves.Visualizer;
 
+import be.tarsos.dsp.AudioDispatcher;
+import be.tarsos.dsp.AudioEvent;
+import be.tarsos.dsp.AudioProcessor;
+import be.tarsos.dsp.io.android.AudioDispatcherFactory;
+import be.tarsos.dsp.pitch.PitchDetectionHandler;
+import be.tarsos.dsp.pitch.PitchDetectionResult;
+import be.tarsos.dsp.pitch.PitchProcessor;
+
 public class RecordActivity extends AppCompatActivity {
 
     // region Attributes
     private static final int TIMER_LENGTH = 6;
     private int mInterval = 1000; // 5 seconds by default, can be changed later
+
+    private Handler uiThread = new Handler();
+    private Thread listeningThread;
+
     private Handler mHandler;
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
-            Log.d("RecordActivity", "Modifying remaining time " + mTxtTimer.getText().toString());
             int remainingTime = Integer.parseInt(mTxtTimer.getText().toString());
             if (remainingTime > 0) {
                 // Decrements time and sets the new
@@ -66,11 +77,26 @@ public class RecordActivity extends AppCompatActivity {
         mHandler.postDelayed(updateTimerThread, 0);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prepare();
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
+        uiThread.removeCallbacksAndMessages(null);
+        listeningThread.interrupt();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mHandler.removeCallbacksAndMessages(null);
+        uiThread.removeCallbacksAndMessages(null);
+        listeningThread.interrupt();
     }
 
     @Override
@@ -102,6 +128,31 @@ public class RecordActivity extends AppCompatActivity {
         this.mTimerView = (TimerView) findViewById(R.id.record_screen_timer);
         this.mTxtTimer = (TextView) findViewById(R.id.record_screen_txt_remaining_time);
         this.audioVisualizer = (Visualizer) findViewById(R.id.record_screen_audio_visualizer);
+    }
+
+    private void prepare() {
+        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, 1024, 0);
+
+        PitchDetectionHandler pdh = new PitchDetectionHandler() {
+            @Override
+            public void handlePitch(PitchDetectionResult result, AudioEvent e) {
+                final float pitchInHz = result.getPitch();
+                uiThread.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int pitch =  pitchInHz > 0 ? (int) pitchInHz : 1;
+
+                        Toast.makeText(RecordActivity.this, "Pitch is now => " + String.valueOf(pitchInHz), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+
+        AudioProcessor p = new PitchProcessor(
+                PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050, 1024, pdh);
+        dispatcher.addAudioProcessor(p);
+        listeningThread = new Thread(dispatcher);
+        listeningThread.start();
     }
     // endregion
 }

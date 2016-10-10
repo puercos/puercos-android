@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.puercos.puercos.R;
 import com.puercos.puercos.components.timerView.TimerView;
+import com.puercos.puercos.networking.NetworkListener;
+import com.puercos.puercos.networking.NetworkManager;
 
 import org.firezenk.audiowaves.Visualizer;
 

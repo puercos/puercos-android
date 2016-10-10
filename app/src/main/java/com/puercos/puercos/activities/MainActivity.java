@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.puercos.puercos.R;
+import com.puercos.puercos.networking.NetworkListener;
+import com.puercos.puercos.networking.NetworkManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +26,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NetworkManager manager = NetworkManager.getInstance(this);
+        manager.performRequest("http://jsonplaceholder.typicode.com/photos/1",
+            new NetworkListener() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.d("FER", "onSuccess: " + result);
+                }
+
+                @Override
+                public void onError(String errorReason) {
+                    Log.e("FER", "onError: " + errorReason);
+                }
+            }
+        );
 
         this.initViews();
     }

@@ -60,7 +60,12 @@ public class AccelerometerRecordActivity extends BaseActivity {
                 // continue the execution flow.
                 mHandler.removeCallbacksAndMessages(null);
                 Intent intent = new Intent(AccelerometerRecordActivity.this, FinishEdittingPasswordActivity.class);
-                intent.putExtra(SOUND_PASSWORD_DESCRIPTION_TAG, soundPassword.toString());
+                if (soundPassword.toString() != null && !soundPassword.toString().isEmpty()) {
+                    intent.putExtra(SOUND_PASSWORD_DESCRIPTION_TAG, soundPassword.toString());
+                } else {
+                    // sound password es null
+                    // porque el user no grabo nada
+                }
                 startActivity(intent);
             }
 

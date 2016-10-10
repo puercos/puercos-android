@@ -37,20 +37,25 @@ public class FinishEdittingPasswordActivity extends BaseActivity {
     }
 
     public void onNextButtonClick(View view) {
-        this.manager.changePassword(soundPassword, new NetworkListener() {
-            @Override
-            public void onSuccess(String result) {
-                Intent intent = new Intent(FinishEdittingPasswordActivity.this, DoorStatusActivity.class);
-                startActivity(intent);
-            }
+        if (soundPassword == null || soundPassword.toString().isEmpty()) {
+            Intent intent = new Intent(FinishEdittingPasswordActivity.this, DoorStatusActivity.class);
+            startActivity(intent);
+        } else {
 
-            @Override
-            public void onError(String errorReason) {
-                // Something went wrong...
-                Toast.makeText(FinishEdittingPasswordActivity.this, "Algo salio mal", Toast.LENGTH_LONG).show();
-            }
-        });
+            this.manager.changePassword(soundPassword, new NetworkListener() {
+                @Override
+                public void onSuccess(String result) {
+                    Intent intent = new Intent(FinishEdittingPasswordActivity.this, DoorStatusActivity.class);
+                    startActivity(intent);
+                }
 
+                @Override
+                public void onError(String errorReason) {
+                    // Something went wrong...
+                    Toast.makeText(FinishEdittingPasswordActivity.this, "Algo salio mal", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     public void onRepeatButtonClick(View view) {

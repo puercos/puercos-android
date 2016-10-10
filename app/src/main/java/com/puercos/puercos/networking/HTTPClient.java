@@ -1,6 +1,7 @@
 package com.puercos.puercos.networking;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,9 +32,15 @@ public abstract class HTTPClient {
         RequestQueue queue = Volley.newRequestQueue(ctx);
         return queue;
     }
+    protected String buildRequestDescription(String url) {
+        return "Network request sent to " + url;
+    }
+
+    // Public members
     public void performRequest(String url, final NetworkListener listener) {
         // Builds the request queue
         RequestQueue queue = buildRequestQueue();
+        Log.d("NETWORKING", buildRequestDescription(url));
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {

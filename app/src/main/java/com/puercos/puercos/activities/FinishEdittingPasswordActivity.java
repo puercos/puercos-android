@@ -15,9 +15,18 @@ public class FinishEdittingPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_finish_editting_password);
     }
 
+    @Override
+    public void onBackPressed() {
+        // Do nothing
+    }
+
     public void onNextButtonClick(View view) {
         Intent intent = new Intent(FinishEdittingPasswordActivity.this, DoorStatusActivity.class);
         startActivity(intent);
     }
 
+    public void oButtonClick(View view) {
+        Intent intent = new Intent(FinishEdittingPasswordActivity.this, RecordActivity.class);
+        startActivity(intent);
+    }
 }

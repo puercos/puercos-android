@@ -1,5 +1,6 @@
 package com.puercos.puercos.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,25 +62,28 @@ public class DoorStatusActivity extends AppCompatActivity {
     }
 
     public void onChangePasswordClick(View view) {
-        SoundPassword password = new SoundPassword();
-        password.addPauseInMilliseconds(1000);
-        password.addPauseInMilliseconds(1500);
-        password.addPauseInMilliseconds(700);
+//        SoundPassword password = new SoundPassword();
+//        password.addPauseInMilliseconds(1000);
+//        password.addPauseInMilliseconds(1500);
+//        password.addPauseInMilliseconds(700);
+//
+//        Log.d(TAG, "onChangePasswordClick: " + password.toString());
+//
+//        this.manager.changePassword(password, new NetworkListener() {
+//            @Override
+//            public void onSuccess(String result) {
+//                // Do nothing
+//                Log.d(TAG, "onSuccess: changa password!");
+//            }
+//
+//            @Override
+//            public void onError(String errorReason) {
+//                // Do nothing
+//                Log.d(TAG, "onError: change password :(");
+//            }
+//        });
 
-        Log.d(TAG, "onChangePasswordClick: " + password.toString());
-
-        this.manager.changePassword(password, new NetworkListener() {
-            @Override
-            public void onSuccess(String result) {
-                // Do nothing
-                Log.d(TAG, "onSuccess: changa password!");
-            }
-
-            @Override
-            public void onError(String errorReason) {
-                // Do nothing
-                Log.d(TAG, "onError: change password :(");
-            }
-        });
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

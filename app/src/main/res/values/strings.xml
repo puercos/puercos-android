@@ -7,4 +7,6 @@
     <string name="txt_open_door">Abrir puerta</string>
     <string name="txt_close_door">Cerrar puerta</string>
     <string name="txt_change_password">Modificar contraseña</string>
+    <string name="txt_confirm_password_button">CONFIRMAR</string>
+    <string name="txt_repeat_password_button">REINTENTAR</string>
 </resources>

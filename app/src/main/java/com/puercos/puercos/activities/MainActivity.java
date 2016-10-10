@@ -27,21 +27,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NetworkManager manager = NetworkManager.getInstance(this);
-        manager.performRequest("http://jsonplaceholder.typicode.com/photos/1",
-            new NetworkListener() {
-                @Override
-                public void onSuccess(String result) {
-                    Log.d("FER", "onSuccess: " + result);
-                }
-
-                @Override
-                public void onError(String errorReason) {
-                    Log.e("FER", "onError: " + errorReason);
-                }
-            }
-        );
-
         this.initViews();
     }
     // endregion
@@ -56,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     // region Actions
     public void handleBeginButton(View view) {
-        Intent intent = new Intent(this, RecordActivity.class);
+        Intent intent = new Intent(this, AccelerometerRecordActivity.class);
         startActivity(intent);
     }
     // endregion

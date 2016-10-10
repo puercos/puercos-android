@@ -15,7 +15,7 @@ public class NetworkManager extends HTTPClient {
 
     private final String OPEN_DOOR_URL          = BASE_URL + "/?dooropen";
     private final String CLOSE_DOOR_URL         = BASE_URL + "/?doorclose";
-    private final String CHANGE_PASSWORD_URL    = BASE_URL + "/?password=200,210,578";
+    private final String CHANGE_PASSWORD_URL    = BASE_URL + "/?password";
 
     // Singleton
     private static NetworkManager instance = null;
@@ -40,7 +40,7 @@ public class NetworkManager extends HTTPClient {
     public void changePassword(SoundPassword password, NetworkListener listener) {
         StringBuilder sb = new StringBuilder();
         sb.append(CHANGE_PASSWORD_URL);
-        sb.append("?");
+        sb.append("=");
         sb.append(password.toString());
         String url = sb.toString();
         super.performRequest(url, listener);

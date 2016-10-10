@@ -1,7 +1,9 @@
 package com.puercos.puercos.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.puercos.puercos.R;
 
@@ -12,4 +14,10 @@ public class FinishEdittingPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_editting_password);
     }
+
+    public void onNextButtonClick(View view) {
+        Intent intent = new Intent(FinishEdittingPasswordActivity.this, DoorStatusActivity.class);
+        startActivity(intent);
+    }
+
 }

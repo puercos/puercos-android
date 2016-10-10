@@ -50,7 +50,7 @@ public class RecordActivity extends AppCompatActivity {
                 // So we have to finish this activity and
                 // continue the execution flow.
                 mHandler.removeCallbacksAndMessages(null);
-                Intent intent = new Intent(RecordActivity.this, FinishEdittingPasswordActivity.class);
+                Intent intent = new Intent(RecordActivity.this, DoorStatusActivity.class);
                 startActivity(intent);
             }
 
@@ -82,7 +82,6 @@ public class RecordActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        prepare();
     }
 
     @Override
@@ -98,7 +97,7 @@ public class RecordActivity extends AppCompatActivity {
         super.onPause();
         mHandler.removeCallbacksAndMessages(null);
         uiThread.removeCallbacksAndMessages(null);
-        listeningThread.interrupt();
+
     }
 
     @Override

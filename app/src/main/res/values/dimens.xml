@@ -7,4 +7,5 @@
     <!-- Font sizes -->
     <dimen name="main_title_font_size">25dp</dimen>
     <dimen name="subtitle_font_size">18dp</dimen>
+    <dimen name="button_regular_height">65dp</dimen>
 </resources>

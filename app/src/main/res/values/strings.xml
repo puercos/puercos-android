@@ -3,4 +3,7 @@
     <string name="main_screen_title">Nueva clave</string>
     <string name="main_screen_subtitle">Podés comenzar a grabar la clave sonora a continuación. Tardarás solo cinco segundos.</string>
     <string name="main_button_text">Comencemos</string>
+    <string name="door_control_title">Control de la puerta</string>
+    <string name="txt_open_door">Abrir puerta</string>
+    <string name="txt_close_door">Cerrar puerta</string>
 </resources>

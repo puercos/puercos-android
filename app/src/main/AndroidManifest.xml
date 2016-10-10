@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.RecordActivity" />
-        <activity android:name=".activities.FinishEdittingPasswordActivity"></activity>
+        <activity android:name=".activities.FinishEdittingPasswordActivity" />
+        <activity android:name=".activities.DoorStatusActivity"></activity>
     </application>
 
 </manifest>

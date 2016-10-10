@@ -25,7 +25,7 @@ import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import be.tarsos.dsp.pitch.PitchProcessor;
 
-public class RecordActivity extends AppCompatActivity {
+public class RecordActivity extends BaseActivity {
 
     // region Attributes
     private static final int TIMER_LENGTH = 6;

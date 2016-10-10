@@ -13,7 +13,7 @@ import com.puercos.puercos.R;
 import com.puercos.puercos.networking.NetworkListener;
 import com.puercos.puercos.networking.NetworkManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     // region Views
     private TextView txtTitle;

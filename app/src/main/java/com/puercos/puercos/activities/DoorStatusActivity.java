@@ -11,7 +11,7 @@ import com.puercos.puercos.model.SoundPassword;
 import com.puercos.puercos.networking.NetworkListener;
 import com.puercos.puercos.networking.NetworkManager;
 
-public class DoorStatusActivity extends AppCompatActivity {
+public class DoorStatusActivity extends BaseActivity {
 
     // Attributes
     static final String TAG = "DOOR_STATUS_ACTIVITY";

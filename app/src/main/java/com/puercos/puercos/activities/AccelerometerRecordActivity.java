@@ -29,11 +29,12 @@ import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import be.tarsos.dsp.pitch.PitchProcessor;
 
-public class AccelerometerRecordActivity extends AppCompatActivity {
+public class AccelerometerRecordActivity extends BaseActivity {
 
     // Constants
     private static final int TIMER_LENGTH = 6;
     private static final int TIME_INTERVAL = 1000; // 5 seconds by default, can be changed later
+    static final String SOUND_PASSWORD_DESCRIPTION_TAG = "sound_password_description"; // 5 seconds by default, can be changed later
 
     // The following are used for the shake detection
     private SensorManager mSensorManager;
@@ -59,6 +60,7 @@ public class AccelerometerRecordActivity extends AppCompatActivity {
                 // continue the execution flow.
                 mHandler.removeCallbacksAndMessages(null);
                 Intent intent = new Intent(AccelerometerRecordActivity.this, FinishEdittingPasswordActivity.class);
+                intent.putExtra(SOUND_PASSWORD_DESCRIPTION_TAG, soundPassword.toString());
                 startActivity(intent);
             }
 

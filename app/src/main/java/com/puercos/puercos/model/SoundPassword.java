@@ -1,5 +1,8 @@
 package com.puercos.puercos.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -18,6 +21,15 @@ public class SoundPassword {
     // Constructors
     public SoundPassword () {
         this.pauses = new ArrayList<Integer>();
+    }
+    public SoundPassword (String description) {
+        this();
+        String[] pausesAsString = description.split(",");
+
+        for (String pauseAsString : pausesAsString) {
+            int pause = Integer.parseInt(pauseAsString);
+            pauses.add(pause);
+        }
     }
 
     // Public methods

@@ -22,6 +22,12 @@ public class DoorStatusActivity extends AppCompatActivity {
         this.manager = NetworkManager.getInstance(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        // do nothing
+
+        //super.onBackPressed();
+    }
 
     // Handlers
     public void onOpenDoorClick(View view) {

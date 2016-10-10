@@ -15,7 +15,7 @@ public class NetworkManager extends HTTPClient {
 
     private final String OPEN_DOOR_URL          = BASE_URL + "/?dooropen";
     private final String CLOSE_DOOR_URL         = BASE_URL + "/?doorclose";
-    private final String CHANGE_PASSWORD_URL    = BASE_URL + "/password";
+    private final String CHANGE_PASSWORD_URL    = BASE_URL + "/?password=200,210,578";
 
     // Singleton
     private static NetworkManager instance = null;

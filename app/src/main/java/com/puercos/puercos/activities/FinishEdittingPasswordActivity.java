@@ -58,6 +58,13 @@ public class FinishEdittingPasswordActivity extends BaseActivity {
             return;
         }
 
+        // Verificamos que no este reproduciendo ya una contraseña.
+        if (this.passwordSoundPlayer.isPlayingPassword()) {
+            // Si es así y está reproduciendo una contraseña,
+            // entonces no volvemos a reproducir otra más arriba.
+            return;
+        }
+
         this.playButton.setImageResource(R.drawable.stop);
         this.passwordSoundPlayer.playPassword(new PasswordSoundPlayer.PasswordPlayingCompletionHandler() {
             @Override

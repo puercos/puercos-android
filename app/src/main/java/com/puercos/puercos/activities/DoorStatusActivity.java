@@ -62,27 +62,6 @@ public class DoorStatusActivity extends BaseActivity {
     }
 
     public void onChangePasswordClick(View view) {
-//        SoundPassword password = new SoundPassword();
-//        password.addPauseInMilliseconds(1000);
-//        password.addPauseInMilliseconds(1500);
-//        password.addPauseInMilliseconds(700);
-//
-//        Log.d(TAG, "onChangePasswordClick: " + password.toString());
-//
-//        this.manager.changePassword(password, new NetworkListener() {
-//            @Override
-//            public void onSuccess(String result) {
-//                // Do nothing
-//                Log.d(TAG, "onSuccess: changa password!");
-//            }
-//
-//            @Override
-//            public void onError(String errorReason) {
-//                // Do nothing
-//                Log.d(TAG, "onError: change password :(");
-//            }
-//        });
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

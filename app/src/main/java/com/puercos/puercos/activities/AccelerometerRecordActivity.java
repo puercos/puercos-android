@@ -18,6 +18,7 @@ import com.puercos.puercos.R;
 import com.puercos.puercos.components.timerView.TimerView;
 import com.puercos.puercos.model.SoundPassword;
 import com.puercos.puercos.utils.ShakeDetector;
+import com.puercos.puercos.utils.sound.PasswordSoundPlayer;
 
 import org.firezenk.audiowaves.Visualizer;
 
@@ -42,6 +43,9 @@ public class AccelerometerRecordActivity extends BaseActivity {
     private ShakeDetector mShakeDetector;
     long lastShakeTime = 0;
     SoundPassword soundPassword;
+
+    // Password sound player
+    PasswordSoundPlayer passwordSoundPlayer;
 
     private Handler mHandler;
     private Runnable updateTimerThread = new Runnable() {
@@ -85,6 +89,7 @@ public class AccelerometerRecordActivity extends BaseActivity {
 
         initViews();
 
+        this.passwordSoundPlayer = new PasswordSoundPlayer(this);
         this.soundPassword = new SoundPassword();
 
         // ShakeDetector initialization
@@ -98,6 +103,9 @@ public class AccelerometerRecordActivity extends BaseActivity {
             public void onShake(int count) {
                 long now = System.currentTimeMillis();
 
+                passwordSoundPlayer.play();
+                passwordSoundPlayer.stop();
+
                 if (lastShakeTime == 0) {
                     // Todavia no se setteo nada.
                     // Es el primer shake
@@ -106,7 +114,6 @@ public class AccelerometerRecordActivity extends BaseActivity {
                     // anteriormente ya se sacudio el dispositivo
                     long pause = now - lastShakeTime;
                     soundPassword.addPauseInMilliseconds((int)pause);
-                    Toast.makeText(AccelerometerRecordActivity.this, "SHAKE!", Toast.LENGTH_SHORT).show();
                 }
 
                 Log.d("ACCELEROMETER_RECORD", "Device has shaked! Password => " + soundPassword.toString());

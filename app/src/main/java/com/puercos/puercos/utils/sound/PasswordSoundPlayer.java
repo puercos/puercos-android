@@ -33,6 +33,10 @@ public class PasswordSoundPlayer extends SoundPlayer {
         super.loadSound(context, R.raw.punch);
     }
 
+    public PasswordSoundPlayer(Activity context) {
+        this(context, new SoundPassword());
+    }
+
     // Getters
     public boolean isPlayingPassword() {
         return this.isPlayingPassword;

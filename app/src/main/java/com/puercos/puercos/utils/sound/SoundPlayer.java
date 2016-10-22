@@ -2,8 +2,10 @@ package com.puercos.puercos.utils.sound;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.util.Log;
 
 import static android.content.Context.AUDIO_SERVICE;
@@ -49,7 +51,19 @@ public abstract class SoundPlayer {
 
         context.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-        this.soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes attributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+
+            soundPool = new SoundPool.Builder()
+                    .setAudioAttributes(attributes)
+                    .build();
+        }
+        else {
+            soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        }
     }
 
     // Getters
@@ -63,15 +77,15 @@ public abstract class SoundPlayer {
      * tambien se requiere una interfaz con un metodo
      * que se ejecute cuando finalizó de cargar
      * */
-    protected void loadSound(Context context, int soundID) {
-        this.soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+    protected void loadSound(Context context, final int _soundID) {
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                soundID = sampleId;
                 loaded = true;
             }
         });
-        this.soundPool.load(context, soundID, 1);
-        this.soundID = soundID;
+        this.soundPool.load(context, _soundID, 1);
     }
 
     // Public interface
@@ -79,7 +93,7 @@ public abstract class SoundPlayer {
         Log.d(TAG, "play: ");
         if (loaded && !isPlaying) {
             Log.d(TAG, "play: Esta reproduciendo!");
-            soundPool.play(soundID, volume, volume, 1, 0, 1f);
+            soundPool.play(soundID, 1.0f, 1.0f, 0, 0, 1.0f);
             counter = counter++;
             isPlaying = true;
         }

@@ -10,6 +10,7 @@ import com.puercos.puercos.R;
 import com.puercos.puercos.model.SoundPassword;
 import com.puercos.puercos.networking.NetworkListener;
 import com.puercos.puercos.networking.NetworkManager;
+import com.puercos.puercos.utils.PasswordSoundPlayer;
 
 public class FinishEdittingPasswordActivity extends BaseActivity {
 
@@ -21,14 +22,17 @@ public class FinishEdittingPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_editting_password);
 
-
         String soundPasswordDescription = getIntent().getStringExtra(AccelerometerRecordActivity.SOUND_PASSWORD_DESCRIPTION_TAG);
 
         if (soundPasswordDescription != null) {
             this.soundPassword = new SoundPassword(soundPasswordDescription);
+
+            PasswordSoundPlayer passwordSoundPlayer = new PasswordSoundPlayer(this, this.soundPassword);
+            passwordSoundPlayer.play();
         }
 
         this.manager = NetworkManager.getInstance(this);
+
     }
 
     @Override

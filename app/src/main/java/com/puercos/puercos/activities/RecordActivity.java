@@ -1,159 +1,255 @@
 package com.puercos.puercos.activities;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AlertDialog;
+import android.media.AudioFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.puercos.puercos.R;
-import com.puercos.puercos.components.timerView.TimerView;
-import com.puercos.puercos.networking.NetworkListener;
-import com.puercos.puercos.networking.NetworkManager;
+import com.puercos.puercos.model.AudioClipListener;
+import com.puercos.puercos.model.AudioClipRecorder;
+import com.puercos.puercos.model.SoundPassword;
 
-import org.firezenk.audiowaves.Visualizer;
+public class RecordActivity extends AppCompatActivity implements AudioClipListener {
 
-import be.tarsos.dsp.AudioDispatcher;
-import be.tarsos.dsp.AudioEvent;
-import be.tarsos.dsp.AudioProcessor;
-import be.tarsos.dsp.io.android.AudioDispatcherFactory;
-import be.tarsos.dsp.pitch.PitchDetectionHandler;
-import be.tarsos.dsp.pitch.PitchDetectionResult;
-import be.tarsos.dsp.pitch.PitchProcessor;
+    // Componentes visuales
+    private RecordButton mRecordButton = null;
+    private PlayButton mPlayButton = null;
+    private TextView mTextView = null;
 
-public class RecordActivity extends BaseActivity {
+    // Sincronizacion de grabacion y reproduccion de audio
+    private boolean mStartRecording = false;
+    private boolean mStartPlaying = false;
 
-    // region Attributes
-    private static final int TIMER_LENGTH = 6;
-    private int mInterval = 1000; // 5 seconds by default, can be changed later
-
-    private Handler uiThread = new Handler();
-    private Thread listeningThread;
-
-    private Handler mHandler;
-    private Runnable updateTimerThread = new Runnable() {
+    // Thread que maneja la grabacion de audio, para no bloquear la UI
+    private Thread recordThread = new Thread(new Runnable() {
+        @Override
         public void run() {
-            int remainingTime = Integer.parseInt(mTxtTimer.getText().toString());
-            if (remainingTime > 0) {
-                // Decrements time and sets the new
-                // remaining time to the TextView
-                remainingTime -= 1;
-                Log.d("RecordActivity", "Modifying remaining time " + mTxtTimer.getText().toString());
-                mTxtTimer.setText(String.valueOf(remainingTime));
-                mHandler.postDelayed(this, mInterval);
-            } else {
-                // Remaining time is now zero.
-                // So we have to finish this activity and
-                // continue the execution flow.
-                mHandler.removeCallbacksAndMessages(null);
-                Intent intent = new Intent(RecordActivity.this, DoorStatusActivity.class);
-                startActivity(intent);
-            }
-
+            audioClipRecorder.startRecording();
         }
-    };
-    // endregion
+    });
 
-    // region Views
-    private TimerView mTimerView;
-    private TextView mTxtTimer;
-    private Visualizer audioVisualizer;
-    // endregion
+    // Objeto que se encarga de la grabacion del audio
+    private AudioClipRecorder audioClipRecorder;
 
-    // region Life cycle
+    // Array que contiene informacion sobre el audio obtenido
+    private short[] audioData = new short[1024];
+    private int index = 0;
+
+    // Deteccion de sonidos
+    private int clapCounter = 0;
+    long lastClapTime = 0;
+    long pause = 0;
+    SoundPassword soundPassword;
+    static final String SOUND_PASSWORD_DESCRIPTION_TAG = "sound_password_description"; // 5 seconds by default, can be changed later
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
+        setContentView(R.layout.activity_main);
 
-        initViews();
+        // Inicializamos el objeto encargado de la grabacion del audio
+        audioClipRecorder = new AudioClipRecorder(this);
 
-        audioVisualizer.startListening();
-        mTimerView.start(TIMER_LENGTH);
+        configurarComponentesVisuales();
 
-        mHandler = new Handler();
-        mHandler.postDelayed(updateTimerThread, 0);
+        this.soundPassword = new SoundPassword();
     }
 
+    /**
+     *
+     * Metodo que debe ser implementado para recibir la informacion del audio grabado
+     *
+     * */
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
+    public boolean heard(final short[] audioData, int sampleRate) {
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
-        uiThread.removeCallbacksAndMessages(null);
-        listeningThread.interrupt();
-    }
+        // Actualizo la informacion sobre el audio obtenido hasta el momento
+        this.audioData = audioData;
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mHandler.removeCallbacksAndMessages(null);
-        uiThread.removeCallbacksAndMessages(null);
+        for (index=0; index<audioData.length; index++) {
+            if (audioData[index] > 20000) {
 
-    }
+                clapCounter++;
 
-    @Override
-    public void onBackPressed() {
-        // Do nothing :D
+                long now = System.currentTimeMillis();
 
-        new AlertDialog.Builder(this)
-            .setTitle("Cancelar la grabación?")
-            .setMessage("Estás seguro de que querés cancelar la grabación?")
-            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    RecordActivity.super.onBackPressed();
+                if (lastClapTime == 0) {
+                    // Todavia no se setteo nada.
+                    // Es el primer shake
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(RecordActivity.this, "FIRST CLAP!" + clapCounter, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    // no es el primer shake,
+                    // anteriormente ya se sacudio el dispositivo
+                    pause = now - lastClapTime;
+                    soundPassword.addPauseInMilliseconds((int)pause);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(RecordActivity.this, "CLAP: " + pause, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-            })
-            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // do nothing
+
+                lastClapTime = now;
+
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run()
+//                    {
+//                        Toast.makeText(MainActivity.this, "CLAP!" + clapCounter, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
+                break;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * Metodo que configura los componentes visuales
+     *
+     * */
+    private void configurarComponentesVisuales() {
+        LinearLayout ll = new LinearLayout(this);
+
+        mRecordButton = new RecordButton(this);
+        ll.addView(mRecordButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+
+        mPlayButton = new PlayButton(this);
+        ll.addView(mPlayButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+
+        mTextView = new TextView(this);
+        mTextView.setText("TextView");
+        ll.addView(mTextView,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+
+        setContentView(ll);
+    }
+
+    /**
+     *
+     * Botones personalizados
+     *
+     * */
+    class RecordButton extends Button {
+        boolean mStartRecording = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onRecord(mStartRecording);
+                if (mStartRecording) {
+                    setText("Stop recording");
+                } else {
+                    setText("Start recording");
                 }
-            })
-            .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
-            .show();
-
-    }
-
-    // endregion
-
-    // region Configuration
-    private void initViews() {
-        this.mTimerView = (TimerView) findViewById(R.id.record_screen_timer);
-        this.mTxtTimer = (TextView) findViewById(R.id.record_screen_txt_remaining_time);
-        this.audioVisualizer = (Visualizer) findViewById(R.id.record_screen_audio_visualizer);
-    }
-
-    private void prepare() {
-        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, 1024, 0);
-
-        PitchDetectionHandler pdh = new PitchDetectionHandler() {
-            @Override
-            public void handlePitch(PitchDetectionResult result, AudioEvent e) {
-                final float pitchInHz = result.getPitch();
-                uiThread.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int pitch =  pitchInHz > 0 ? (int) pitchInHz : 1;
-
-                        Toast.makeText(RecordActivity.this, "Pitch is now => " + String.valueOf(pitchInHz), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                mStartRecording = !mStartRecording;
             }
         };
 
-        AudioProcessor p = new PitchProcessor(
-                PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 22050, 1024, pdh);
-        dispatcher.addAudioProcessor(p);
-        listeningThread = new Thread(dispatcher);
-        listeningThread.start();
+        public RecordButton(Context ctx) {
+            super(ctx);
+            setText("Start recording");
+            setOnClickListener(clicker);
+        }
     }
-    // endregion
+    class PlayButton extends Button {
+        boolean mStartPlaying = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlay(mStartPlaying);
+                if (mStartPlaying) {
+                    setText("Stop playing");
+                } else {
+                    setText("Start playing");
+                }
+                mStartPlaying = !mStartPlaying;
+            }
+        };
+
+        public PlayButton(Context ctx) {
+            super(ctx);
+            setText("Start playing");
+            setOnClickListener(clicker);
+        }
+    }
+
+    /**
+     *
+     * Manejo de los botones
+     *
+     * */
+    public void onRecord(boolean start) {
+        if (start) {
+
+            recordThread.start();
+
+//            audioClipRecorder.startRecordingForTime(5000,AudioClipRecorder.RECORDER_SAMPLERATE_8000, AudioFormat.ENCODING_PCM_16BIT);
+
+//            new Thread(new Runnable() {
+//                public void run() {
+//                    audioClipRecorder.startRecording();
+//                }
+//            }).start();
+
+        } else {
+            audioClipRecorder.stopRecording();
+
+            Intent intent = new Intent(RecordActivity.this, FinishEdittingPasswordActivity.class);
+            if (soundPassword.toString() != null && !soundPassword.toString().isEmpty()) {
+                intent.putExtra(SOUND_PASSWORD_DESCRIPTION_TAG, soundPassword.toString());
+            } else {
+                // sound password es null
+                // porque el user no grabo nada
+            }
+            startActivity(intent);
+
+//            String audioDataEncoded = audioData.toString();
+//
+//            if(audioDataEncoded.length() > 0) {
+//                mTextView.setText("No data");
+//            } else {
+//                mTextView.setText("Data");
+//            }
+//            Log.d("Audio record data","Audio Data: " + audioData.length);
+        }
+    }
+    public void onPlay(boolean start) {
+        if (start) {
+//            startPlaying();
+        } else {
+//            stopPlaying();
+        }
+    }
 }

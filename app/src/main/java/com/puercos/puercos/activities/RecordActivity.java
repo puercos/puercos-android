@@ -224,7 +224,10 @@ public class RecordActivity extends AppCompatActivity implements AudioClipListen
 //            }).start();
 
         } else {
+
             audioClipRecorder.stopRecording();
+
+            recordThread.stop();
 
             Intent intent = new Intent(RecordActivity.this, FinishEdittingPasswordActivity.class);
             if (soundPassword.toString() != null && !soundPassword.toString().isEmpty()) {

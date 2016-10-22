@@ -41,7 +41,8 @@ public class MainActivity extends BaseActivity {
 
     // region Actions
     public void handleBeginButton(View view) {
-        Intent intent = new Intent(this, RecordActivity.class);
+//        Intent intent = new Intent(this, RecordActivity.class);
+        Intent intent = new Intent(this, AccelerometerRecordActivity.class);
         startActivity(intent);
     }
     // endregion

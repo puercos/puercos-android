@@ -64,6 +64,8 @@ public abstract class SoundPlayer {
         else {
             soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         }
+
+        play();
     }
 
     // Getters

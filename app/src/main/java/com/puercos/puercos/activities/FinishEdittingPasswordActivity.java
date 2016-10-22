@@ -1,7 +1,6 @@
 package com.puercos.puercos.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -10,7 +9,7 @@ import com.puercos.puercos.R;
 import com.puercos.puercos.model.SoundPassword;
 import com.puercos.puercos.networking.NetworkListener;
 import com.puercos.puercos.networking.NetworkManager;
-import com.puercos.puercos.utils.PasswordSoundPlayer;
+import com.puercos.puercos.utils.sound.PasswordSoundPlayer;
 
 public class FinishEdittingPasswordActivity extends BaseActivity {
 
@@ -38,6 +37,12 @@ public class FinishEdittingPasswordActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         // Do nothing
+    }
+
+    // Actions
+
+    public void onPlayButtonClick(View view) {
+
     }
 
     public void onNextButtonClick(View view) {

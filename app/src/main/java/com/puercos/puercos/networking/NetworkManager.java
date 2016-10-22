@@ -14,7 +14,7 @@ public class NetworkManager extends HTTPClient {
     private final String BASE_URL = "http://192.168.0.50";
 
     private final String OPEN_DOOR_URL          = BASE_URL + "/?dooropen";
-    private final String CLOSE_DOOR_URL         = BASE_URL + "/?doorclose";
+    private final String CLOSE_DOOR_URL         = BASE_URL + "/?doorclos";
     private final String CHANGE_PASSWORD_URL    = BASE_URL + "/?password";
 
     // Singleton
@@ -42,6 +42,7 @@ public class NetworkManager extends HTTPClient {
         sb.append(CHANGE_PASSWORD_URL);
         sb.append("=");
         sb.append(password.toString());
+        sb.append("x");
         String url = sb.toString();
         super.performRequest(url, listener);
     }

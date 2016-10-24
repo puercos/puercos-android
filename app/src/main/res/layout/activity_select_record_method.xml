@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryLight">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:text="@string/select_record_method_title"
+                android:textSize="24sp"
+                android:textStyle="normal|bold"
+                android:layout_height="50dp"
+                android:textAlignment="center"
+                android:paddingTop="10dp"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:text="@string/select_record_method_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:paddingTop="10dp"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:text="@string/txt_select_accelerometer_button"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:id="@+id/btn_accelerometer"
+        android:layout_weight="1"
+        android:backgroundTint="@color/colorAccent"
+        android:textSize="24sp"
+        android:textColor="@color/colorWhite"
+        android:onClick="handleAccelerometerRecordActivity" />
+
+    <Button
+        android:text="@string/txt_select_microphone_button"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:id="@+id/btn_microphone"
+        android:layout_weight="1"
+        android:textSize="24sp"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="handleMicrophoneRecordActivity" />
+
+</LinearLayout>

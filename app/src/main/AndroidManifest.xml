@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Required hardware features -->
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.RecordActivity" />
+        <activity android:name=".activities.MicrophoneRecordActivity" />
         <activity android:name=".activities.FinishEdittingPasswordActivity" />
         <activity android:name=".activities.DoorStatusActivity">
             <intent-filter>
@@ -25,7 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AccelerometerRecordActivity"></activity>
+        <activity android:name=".activities.AccelerometerRecordActivity" />
+        <activity android:name=".activities.SelectRecordMethodActivity"></activity>
     </application>
 
 </manifest>

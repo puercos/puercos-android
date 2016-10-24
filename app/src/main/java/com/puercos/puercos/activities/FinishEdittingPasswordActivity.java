@@ -97,7 +97,7 @@ public class FinishEdittingPasswordActivity extends BaseActivity {
     }
 
     public void onRepeatButtonClick(View view) {
-        Intent intent = new Intent(FinishEdittingPasswordActivity.this, RecordActivity.class);
+        Intent intent = new Intent(FinishEdittingPasswordActivity.this, MicrophoneRecordActivity.class);
         startActivity(intent);
     }
 }

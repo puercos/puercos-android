@@ -5,7 +5,8 @@
     android:padding="@dimen/global_padding"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aw="http://schemas.android.com/apk/res-auto">
+    xmlns:aw="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayoutID">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,29 +27,8 @@
             android:text="6"
             android:textColor="@color/colorWhite"
             android:textSize="45dp"/>
+<!--com.puercos.puercos.activities.MicrophoneRecordActivityrdActivity.RecordButton-->
 
     </RelativeLayout>
-
-    <org.firezenk.audiowaves.Visualizer
-        android:id="@+id/record_screen_audio_visualizer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        aw:aw_format="vertical_lines"
-        aw:aw_gravity="center"
-        aw:aw_width="800"
-        aw:aw_height="100"
-        aw:aw_num_waves="10"
-        aw:aw_line_with="30"
-        aw:aw_line_min_with="30"
-        aw:aw_line_height="30"
-        aw:aw_line_min_height="30"
-        aw:aw_line_spacing="10"
-        aw:aw_line_border_radius="50"
-        aw:aw_ball_diameter="30"
-        aw:aw_color_uniform="@color/colorAccent"
-        aw:aw_color_is_gradient="true"
-        aw:aw_color_gradient_start="@color/colorAccent"
-        aw:aw_color_gradient_end="@color/colorAccent" />
 
 </LinearLayout>

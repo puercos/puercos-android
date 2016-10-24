@@ -1,17 +1,12 @@
 package com.puercos.puercos.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.puercos.puercos.R;
-import com.puercos.puercos.networking.NetworkListener;
-import com.puercos.puercos.networking.NetworkManager;
 
 public class MainActivity extends BaseActivity {
 
@@ -41,8 +36,7 @@ public class MainActivity extends BaseActivity {
 
     // region Actions
     public void handleBeginButton(View view) {
-//        Intent intent = new Intent(this, RecordActivity.class);
-        Intent intent = new Intent(this, AccelerometerRecordActivity.class);
+        Intent intent = new Intent(this, SelectRecordMethodActivity.class);
         startActivity(intent);
     }
     // endregion

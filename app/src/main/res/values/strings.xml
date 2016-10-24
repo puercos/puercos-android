@@ -9,4 +9,8 @@
     <string name="txt_change_password">Modificar contraseña</string>
     <string name="txt_confirm_password_button">CONFIRMAR</string>
     <string name="txt_repeat_password_button">REINTENTAR</string>
+    <string name="select_record_method_title">Generacion de la clave sonora</string>
+    <string name="select_record_method_subtitle">Podes optar entre 2 sensores distintos del celular: el acelerometro o el microfono</string>
+    <string name="txt_select_accelerometer_button">Acelerometro</string>
+    <string name="txt_select_microphone_button">Microfono</string>
 </resources>

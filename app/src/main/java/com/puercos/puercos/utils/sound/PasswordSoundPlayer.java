@@ -44,6 +44,42 @@ public class PasswordSoundPlayer extends SoundPlayer {
 
     // Metodos publicos
 
+    public void playDefaultSound() {
+        Log.d(TAG, "play: ");
+        this.isPlayingPassword = true;
+
+        int pauseAcummulator = 0;
+        int index = 0;
+        boolean isLastPause = false;
+
+        // test
+        SoundPassword password = new SoundPassword("1000");
+
+        for(int pause : password.getPauses()) {
+            if (index == password.getPauses().size() - 1) {
+                isLastPause = true;
+            }
+            final boolean isThisTheLastPause = isLastPause;
+
+            pauseAcummulator += pause;
+            Log.d(TAG, "play: Ponemos play con una pausa de " + String.valueOf(pauseAcummulator));
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    PasswordSoundPlayer.super.play();
+                    PasswordSoundPlayer.super.stop();
+                    if(isThisTheLastPause) {
+                        isPlayingPassword = false;
+                    }
+                }
+            }, pauseAcummulator);
+            index++;
+        }
+    }
+
     public void playPassword(final PasswordPlayingCompletionHandler completionHandler) {
         Log.d(TAG, "play: ");
         this.isPlayingPassword = true;
@@ -51,6 +87,7 @@ public class PasswordSoundPlayer extends SoundPlayer {
         int pauseAcummulator = 0;
         int index = 0;
         boolean isLastPause = false;
+
         for(int pause : password.getPauses()) {
             if (index == password.getPauses().size() - 1) {
                 isLastPause = true;

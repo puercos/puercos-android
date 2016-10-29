@@ -55,7 +55,7 @@ public class AccelerometerRecordActivity extends BaseActivity {
                 // Decrements time and sets the new
                 // remaining time to the TextView
                 remainingTime -= 1;
-                Log.d("MicrophoneRecordActivity", "Modifying remaining time " + mTxtTimer.getText().toString());
+                Log.d("MicrophoneActivity", "Remaining time " + mTxtTimer.getText().toString());
                 mTxtTimer.setText(String.valueOf(remainingTime));
                 mHandler.postDelayed(this, TIME_INTERVAL);
             } else {
@@ -72,7 +72,6 @@ public class AccelerometerRecordActivity extends BaseActivity {
                 }
                 startActivity(intent);
             }
-
         }
     };
 

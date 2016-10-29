@@ -61,8 +61,8 @@ public class DoorStatusActivity extends BaseActivity {
         });
     }
 
-    public void onChangePasswordClick(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+    public void onCurrentPasswordClick(View view) {
+        Intent intent = new Intent(this, CurrentPasswordActivity.class);
         startActivity(intent);
     }
 }

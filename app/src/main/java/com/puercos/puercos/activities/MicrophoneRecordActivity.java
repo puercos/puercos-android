@@ -53,7 +53,7 @@ public class MicrophoneRecordActivity extends BaseActivity implements AudioClipL
     }
     // endregion
 
-    // region Configuration
+    // region Configurationm
     private void initViews() {
         this.mTimerView = (TimerView) findViewById(R.id.record_screen_timer);
         this.mTxtTimer = (TextView) findViewById(R.id.record_screen_txt_remaining_time);

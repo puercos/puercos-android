@@ -28,7 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.AccelerometerRecordActivity" />
-        <activity android:name=".activities.SelectRecordMethodActivity"></activity>
+        <activity android:name=".activities.SelectRecordMethodActivity" />
+        <activity android:name=".activities.CurrentPasswordActivity"></activity>
     </application>
 
 </manifest>

@@ -41,7 +41,7 @@ public class NetworkManager extends HTTPClient {
         StringBuilder sb = new StringBuilder();
         sb.append(CHANGE_PASSWORD_URL);
         sb.append("=");
-        sb.append(password.toString());
+        sb.append(password.toStringForNetwork());
         sb.append("x");
         String url = sb.toString();
         super.performRequest(url, listener);

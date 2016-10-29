@@ -50,11 +50,11 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_regular_height"
-        android:text="@string/txt_change_password"
+        android:text="@string/txt_current_password"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/subtitle_font_size"
         android:backgroundTint="@color/colorPrimary"
-        android:onClick="onChangePasswordClick"/>
+        android:onClick="onCurrentPasswordClick"/>
 
     <Button
         android:layout_width="match_parent"

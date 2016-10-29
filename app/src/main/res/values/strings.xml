@@ -13,4 +13,6 @@
     <string name="select_record_method_subtitle">Podes optar entre 2 sensores distintos del celular: el acelerometro o el microfono</string>
     <string name="txt_select_accelerometer_button">Acelerometro</string>
     <string name="txt_select_microphone_button">Microfono</string>
+    <string name="txt_modify_password_button">Modificar</string>
+    <string name="txt_current_password">ESCUCHAR CONTRASEÑA</string>
 </resources>

@@ -10,6 +10,7 @@ import com.puercos.puercos.R;
 import com.puercos.puercos.model.SoundPassword;
 import com.puercos.puercos.networking.NetworkListener;
 import com.puercos.puercos.networking.NetworkManager;
+import com.puercos.puercos.utils.SoundPasswordPersistor;
 import com.puercos.puercos.utils.sound.PasswordSoundPlayer;
 
 public class FinishEdittingPasswordActivity extends BaseActivity {
@@ -83,6 +84,10 @@ public class FinishEdittingPasswordActivity extends BaseActivity {
             this.manager.changePassword(soundPassword, new NetworkListener() {
                 @Override
                 public void onSuccess(String result) {
+                    // Guardamos el nuevo password en Shared Preferences
+                    SoundPasswordPersistor soundPasswordPersistor = new SoundPasswordPersistor(FinishEdittingPasswordActivity.this);
+                    soundPasswordPersistor.setSoundPassword(soundPassword);
+
                     Intent intent = new Intent(FinishEdittingPasswordActivity.this, DoorStatusActivity.class);
                     startActivity(intent);
                 }

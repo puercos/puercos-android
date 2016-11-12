@@ -5,8 +5,6 @@ Aplicación Android de la Puerta con Reconocimiento de código sonoro.
 
 Desarrollar un sistema de apertura/cerradura para una puerta mediante la deteccion de sonidos (palmadas o golpes en la misma puerta), de tal manera que la puerta se abra cuando el sistema, no solamente detecte la cantidad de sonidos especifica sino tambien se respete el tiempo entre cada sonido, como si fuera un codigo. Desde una aplicacion para android se podra cambiar ese codigo, ademas de abrir y cerrar la cerradura de la puerta. 
 
-![Diagrama de componentes](./gh-assets/diagrama.png)
-
 ## Hardware Utilizado
 
 * Dispositivos con Android a partir de la versión 4.03 (LG con Android 5.0.1)
@@ -21,7 +19,4 @@ Para la parte de Android, se desarrolló una aplicación que permite la grabaci�
 La funcionalidad principal de la aplicación consiste en un lapso de cinco segundos en donde el usuario puede grabar la contraseña que desee para la apertura de la cerradura.  Al usuario se le ofrecen dos alternativas para la grabación de dicha contraseña: 
 La primer alternativa traduce una serie de movimientos bruscos del dispositivo realizados por el usuario en un patrón sonoro, que luego es codificado y enviado a la placa Arduino. Para brindar esta funcionalidad, utilizamos el acelerómetro.
 Análogamente, el usuario puede obtener el mismo resultando grabando audio por medio del micrófono. Internamente la aplicación reconoce los sonidos de mayor intensidad del audio a medida que es grabado (golpes, aplausos, etc) y genera un patrón sonoro utilizando la misma lógica de la funcionalidad descrita anteriormente.
-
-## Capturas de pantalla
-
 

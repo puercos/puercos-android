@@ -61,8 +61,12 @@ public class DoorStatusActivity extends BaseActivity {
         });
     }
 
+    // Este metodo se ejecuta cuando se toca el boton
+    // "Escuchar contraseña"
     public void onCurrentPasswordClick(View view) {
+        // Creamos un intent que tiene como objetivo CurrentPasswordActivity
         Intent intent = new Intent(this, CurrentPasswordActivity.class);
+        // Y lo lanzamos
         startActivity(intent);
     }
 }

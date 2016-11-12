@@ -32,16 +32,32 @@ import be.tarsos.dsp.pitch.PitchProcessor;
 
 public class AccelerometerRecordActivity extends BaseActivity {
 
-    // Constants
+    // Constantes
+
+    // Estas son constantes del TIMER
+
+    // Cantidad de segundos que va a estar grabando
     private static final int TIMER_LENGTH = 6;
     private static final int TIME_INTERVAL = 1000; // 5 seconds by default, can be changed later
     static final String SOUND_PASSWORD_DESCRIPTION_TAG = "sound_password_description"; // 5 seconds by default, can be changed later
 
     // The following are used for the shake detection
+
+    // Esto me parece que ya no lo usamos
     private SensorManager mSensorManager;
+
+    // Me parece que quedo viejo de antes
+    // ahora ya no lo usa
     private Sensor mAccelerometer;
+
+    // Esta clase detecta cuando se sacude el dispositivo.
+    // Es la clase intermedia entre el acelerometro
+    // y esta activity, para que quede menos feo.
     private ShakeDetector mShakeDetector;
+    // El tiempo del ultimo shake
     long lastShakeTime = 0;
+
+    // Aca vamos a guardar la contrasenia que estamos grabando
     SoundPassword soundPassword;
 
     // Password sound player
@@ -49,6 +65,8 @@ public class AccelerometerRecordActivity extends BaseActivity {
 
     private Handler mHandler;
     private Runnable updateTimerThread = new Runnable() {
+        // Este es un hilo que cada segundo decrementa el timer,
+        // y cuando se termina y llega a 0, cambia de activity.
         public void run() {
             int remainingTime = Integer.parseInt(mTxtTimer.getText().toString());
             if (remainingTime > 0) {

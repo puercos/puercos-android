@@ -2,28 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.puercos.puercos">
 
-    <!-- Permissions -->
+    <!-- Permisos que se le piden al usuario al instalar la app -->
+
+    <!-- 1. Permiso de grabar audio -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 2. Permiso de utilizar internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- Required hardware features -->
+    <!-- Requerimientos de uso de hardware -->
+    <!-- Uso del acelerometro -->
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
 
+    <!-- Propiedades de la aplicacion -->
     <application
         android:allowBackup="true"
         android:icon="@drawable/door"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- Lista de activities -->
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.MicrophoneRecordActivity" />
         <activity android:name=".activities.FinishEdittingPasswordActivity" />
         <activity android:name=".activities.DoorStatusActivity">
+            <!-- Intent filter con nombre android.intent.action.MAIN es la activity
+             que inicia la aplicacion -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

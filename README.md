@@ -24,4 +24,20 @@ Análogamente, el usuario puede obtener el mismo resultando grabando audio por m
 
 ## Capturas de pantalla
 
+![Screenshot 001](./gh-assets/screenshot001.jpg)
+![Screenshot 002](./gh-assets/screenshot002.jpg)
+![Screenshot 003](./gh-assets/screenshot003.jpg)
+![Screenshot 004](./gh-assets/screenshot004.jpg)
+![Screenshot 005](./gh-assets/screenshot005.jpg)
+![Screenshot 006](./gh-assets/screenshot006.jpg)
+![Screenshot 007](./gh-assets/screenshot007.jpg)
 
+## Demostración
+
+Existe una demostración del uso del sistema en youtube [Aquí](https://)
+
+## Nosotros somos
+
+* Fernando Martín Ortiz. ortizfernandomartin@gmail.com
+* Nahuel Roldán. nahu.jose.roldan1990@gmail.com
+* Agustín Emmanuel Bravo. agusbravolg@gmail.com
